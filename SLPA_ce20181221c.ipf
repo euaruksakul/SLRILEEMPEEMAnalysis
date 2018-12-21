@@ -9679,7 +9679,6 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	Modifygraph mirror=1,tick=2,minor=1
 	Label bottom "Start voltage (eV)"
 
-
 	//SET3: Dispersive line creation
 	Variable Set3_XPos=525
 	Variable Set3_YPos=Set1_YPos
@@ -9705,7 +9704,6 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	Button Button_EditDispL ,pos={Set3_XPos+160,Set3_YPos+37},title="Manually edit disp. line",size={130,16},proc=ButtonProc_DXPS_EditDispL,fSize=10
 	Button Button_CreateSpectra,pos={Set3_XPos,Set3_YPos+55}, size={325,20}, title="Create spectra",proc=ButtonProc_DXPS_CreateSpectra,fSize=10
 	
-	
 	//SET4: Disp. factor and XPS param.
 	Variable Set4_XPos=525
 	Variable Set4_YPos=150
@@ -9725,7 +9723,9 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	ListBox List_XPSParam,pos={Set4_XPos+125,Set4_YPos+8},size={155,80},ListWave=root:Package_SLP:DispXPS:SLP_DXPS_XPSParamW
 	ListBox List_XPSParam,widths={45,25,20},proc=ListBoxProc_DXPS_XPSParam,SelWave=root:Package_SLP:DispXPS:SLP_DXPS_XPSParamSelW
 	
-	
+	Button Button_ShiftCmbndBELeft,pos={618,220},size={30,16},proc=ButtonProc_DXPS,title="<",fSize=8
+	Button Button_ShiftCmbndBERight,pos={806,221},size={30,16},proc=ButtonProc_DXPS,title=">",fSize=8
+
 	//SET5: Periodic table
 	Variable Set5_XPos=525
 	Variable Set5_YPos=260
@@ -9734,6 +9734,8 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	
 	SLP_Util_PT_AddPeriodicTable("SLP_DispXPS_Panel_01",Set5_XPos,Set5_YPos+5,1)
 	
+	Button Button_PT_Clear,pos={724,245},size={59,16},proc=ButtonProc_DXPS,title="Clear",fSize=10
+
 	//SET6: ScanListW
 	Variable Set6_XPos=525
 	Variable Set6_YPos=425
@@ -9751,7 +9753,6 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	Button Button_SelNone,pos={Set6_XPos+85,Set6_YPos+235},size={82,16},title="Select none",proc=ButtonProc_DXPS_SelNone,fSize=10
 	Button Button_DelRawData,pos={Set6_XPos+170,Set6_YPos+235},size={97,16},title="Remove raw data",proc=ButtonProc_DXPS_DelRawData,fSize=10
 	Button Button_Restore,pos={Set6_XPos+270,Set6_YPos+235},size={80,16},title="Restore data..",proc=ButtonProc_DXPS_RestoreRawData,fSize=10
-	
 	
 	Button Button_DeleteDataSet,pos={Set6_XPos,Set6_YPos+254},size={97,16},title="Delete selected..",proc=ButtonProc_DXPS_DelDataSet,fSize=10
 	Button button_ExportSelected,pos={Set6_XPos+100,Set6_YPos+254},size={110,16},title="Export selected",proc=ButtonProc_DXPS_ExportSelected,fSize=10
