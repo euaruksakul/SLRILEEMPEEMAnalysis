@@ -13178,14 +13178,14 @@ Function ButtonProc_DXPS(ba) : ButtonControl
 					EndIf
 					break
 				case "button_PT_clear":
+					SLP_DXPS_RemoveETag("SLP_DispXPS_Panel_01#DX_MERGEDSPECTRA")
 					Wave /T PT_EList=root:Package_SLP:Util:PT:PT_EList
 					PT_EList[][5]="0"
 					Variable Set5_XPos=525
 					Variable Set5_YPos=260					
 					SLP_Util_PT_AddPeriodicTable("SLP_DispXPS_Panel_01",Set5_XPos,Set5_YPos+5,1) //Note the position
-					SLP_Util_LoadDB()
+					//SLP_Util_LoadDB()
 					SLP_Util_PT_GenXPSTag()
-					SLP_DXPS_RemoveETag("SLP_DispXPS_Panel_01#DX_MERGEDSPECTRA")
 					break
 				case "Button_ShiftCmbndBELeft":
 					Wave /T SLP_DXPS_XPSParamW=root:Package_SLP:DispXPS:SLP_DXPS_XPSParamW
