@@ -9756,6 +9756,8 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	CheckBox CheckBox_Show_Auger,fSize=10
 	CheckBox CheckBox_Show_Custom,pos={689,267},size={55,15},proc=CheckProc_DXPS,title="Custom"
 	CheckBox CheckBox_Show_Custom,fSize=10,value= 0
+	Button Button_PT_CustomELine,pos={689,285},size={65,16},proc=ButtonProc_DXPS,title="Edit custom"
+	Button Button_PT_CustomELine,fSize=10
 
 
 
@@ -10667,7 +10669,7 @@ Function CheckProc_DXPSExp_ExpOptions(cba) : CheckBoxControl
 					ExpWave[5][5]=num2str(checked)
 					break
 				case "check_DXPSExp_Text":
-					ExpWave[9][1]=num2str(checked)
+					ExpWave[8][3]=num2str(checked)
 					break			
 				EndSwitch
 						
@@ -10766,7 +10768,7 @@ Function Panel_DXPS_Export() : Panel
 	CheckBox check_DXPSExp_2D,pos={50,148},size={54,15},title="2D plot",fSize=10,value= str2num(ExpWave[6][1]),proc=CheckProc_DXPSExp_ExpOptions
 	CheckBox check_DXPSExp_GLAFit,pos={50,166},size={30,15},title="Fit",fSize=10,value= str2num(ExpWave[7][1]),proc=CheckProc_DXPSExp_ExpOptions
 	CheckBox check_DXPSExp_Report,pos={50,186},size={50,15},title="Report",fSize=10,value= str2num(ExpWave[8][1]),proc=CheckProc_DXPSExp_ExpOptions
-	CheckBox check_DXPSExp_Text,pos={119,187},size={37,15},title="Text export",fSize=10,value= str2num(ExpWave[9][1]),proc=CheckProc_DXPSExp_ExpOptions
+	CheckBox check_DXPSExp_Text,pos={119,187},size={37,15},title="Text export",fSize=10,value= str2num(ExpWave[8][3]),proc=CheckProc_DXPSExp_ExpOptions
 	
 	//Auto-detect the parameters (from wave x-scale) [WARNING] only for BE (not for KE)
 	Variable i=0
@@ -11000,7 +11002,7 @@ Function SLP_DXPS_ExportSelected()
 		
 		//Converting the selected scans into text files
 		//Added on 20181024
-		If (str2num(ExpWave[9][1])) //text file
+		If (str2num(ExpWave[8][3])) //text file
 			//Ask for path to save file
 			GetFileFolderInfo /D
 			If (V_Flag!=-1)
