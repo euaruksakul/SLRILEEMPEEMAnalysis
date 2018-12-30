@@ -9728,7 +9728,7 @@ Function SLP_DXPS_CreatePanel1() : Panel
 	DrawText /W=SLP_DispXPS_Panel_01 Set4_XPos+125,Set4_YPos,"XPS parameters"
 	
 	SetVariable SetVar_DispFactor,pos={Set4_XPos,Set4_YPos+8},size={120,15},title="Disp. Factor",proc=SetVarProc_DXPS_EnCorrection
-	SetVariable SetVar_DispFactor,value= root:Package_SLP:DispXPS:DispFactor,limits={0.001,100,-100}
+	SetVariable SetVar_DispFactor,value= root:Package_SLP:DispXPS:DispFactor,limits={-100,100,0.001}
 	SetVariable SetVar_CenterPointX,pos={Set4_XPos,Set4_YPos+24},size={120,15},title="X\\B0",proc=SetVarProc_DXPS_EnCorrection
 	SetVariable SetVar_CenterPointX,value= root:Package_SLP:DispXPS:CenterPointX
 	SetVariable SetVar_CenterPointY,pos={Set4_XPos,Set4_YPos+40},size={120,15},title="Y\\B0",proc=SetVarProc_DXPS_EnCorrection
