@@ -1326,7 +1326,11 @@ Function ButtonProc_MGFit(ba) : ButtonControl
 			StrSwitch (ba.ctrlName)
 				case "Button_CopyPrevious":
 					SLP_MGFit_CopyPrevious()
-				Break
+					Break
+				case "Button_Rescale":
+					Setaxis /A /W=SLP_MultiGLAFit_01#G0
+					Break
+				
 			EndSwitch
 			break
 		case -1: // control being killed
