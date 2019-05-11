@@ -18391,6 +18391,8 @@ Function SLP_IXPS_MCorrInit()
 	ManCorr_Range[0][]={{"--"},{"<Enter note here>"},{"1e-5"},{"1e-4"},{"1e-3"},{"1e-2"},{"-1e-3"},{"-1e-4"},{"1e-3"},{"1e-2"},{"0"},{"100"},{"1e-3"},{"1e-2"},{"-1e-1"},{"-1e-2"},{"-1"},{"0"},{"10"},{"-10"},{"10"},{"0.1"},{"2"}}
 	ManCorr_Range[1][]={{"Default"},{"<Enter note here>"},{"1e-5"},{"1e-4"},{"1e-3"},{"1e-2"},{"-1e-3"},{"-1e-4"},{"1e-3"},{"1e-2"},{"0"},{"100"},{"1e-3"},{"1e-2"},{"-1e-1"},{"-1e-2"},{"-1"},{"0"},{"10"},{"-10"},{"10"},{"0.1"},{"2"}}
 	
+	SLP_IXPS_ManCorrPresetInit()
+	
 	SLP_IXPS_MCorrReadPreset()
 	
 	SetDataFolder $CurrentFolder
