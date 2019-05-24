@@ -6683,7 +6683,7 @@ Function SLP_LL_PlotImage(ImageName,ImageLocation)
 	
 	ModifyGraph /W=$PlotName standoff=0
 	ModifyGraph /W=$PlotName fSize=7
-	SetAxis /W=$PlotName/A/R left
+	//SetAxis /W=$PlotName/A/R left
 	ModifyGraph /W=$PlotName minor=1
 	
 	CurrentImageName=ImageName
