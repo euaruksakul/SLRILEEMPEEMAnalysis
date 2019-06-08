@@ -13477,7 +13477,7 @@ Function SLP_DXPS_ExportSelected()
 		NewDataFolder $FolderFName
 		
 		For (i=0;i<N_Scans;i+=1)
-			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 				If (str2num(ExpWave[3][5])==0) //BE
 					WaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_CmbndBE"
 				Else
