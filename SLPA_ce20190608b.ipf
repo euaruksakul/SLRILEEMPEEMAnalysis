@@ -12490,7 +12490,7 @@ Function SLP_DXPS_DelScanBatch()
 	String WarnTxt=""
 	
 	For (i=0;i<dimsize(SLP_DXPS_ScanListDisplaySelW,0);i+=1)
-		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 			VolName=SLP_DXPS_ScanListW[i][0]
 			WarnTxt="Delete scan: "+VolName+" ?"
 			DoAlert 1,WarnTxt
@@ -12527,7 +12527,7 @@ Function ButtonProc_DXPS_DelDataSet(ba) : ButtonControl
 			if (SLP_DXPS_ScanListDisplaySelW[SelRow][0]==48)
 				//Find the first non-selected DataSet from the top	
 				variable i=0
-				For (i=0;i<dimsize(SLP_DXPS_ScanListDisplaySelW,0)&&SLP_DXPS_ScanListDisplaySelW[i][0]==48;i+=1)
+				For (i=0;i<dimsize(SLP_DXPS_ScanListDisplaySelW,0)&&(SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49);i+=1)
 					DoUpdate
 				Endfor
 				//i is now the index of the first non-selected DataSet
@@ -13203,7 +13203,7 @@ Function SLP_DXPSExp_AutoRange()
 	Exp_BGLowX=-inf
 	If (!KE_Flg)//KE flg =0
 		For (i=0;i<N_Scans;i+=1)
-			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 				WaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_CmbndBE"
 				Wave CmbndW=$WaveFName
 				If (Dimoffset(CmbndW,0)<Exp_BGHighX)
@@ -13217,7 +13217,7 @@ Function SLP_DXPSExp_AutoRange()
 		Exp_NrmPos=Exp_BGLowX
 	Elseif (KE_Flg)//KE flg =1
 		For (i=0;i<N_Scans;i+=1)
-			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+			If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 				WaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_Cmbnd"
 				Wave CmbndW=$WaveFName
 				If (Dimoffset(CmbndW,0)>Exp_BGLowX)
@@ -13693,7 +13693,7 @@ Function SLP_DXPS_Export2D()
 	
 	//Auto-detect the parameters (from wave x-scale)
 	For (i=0;i<N_Scans;i+=1)
-		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 			WaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_CmbndBE"
 			Wave CmbndW=$WaveFName
 			If (Dimoffset(CmbndW,0)<Energy_max)
@@ -13715,7 +13715,7 @@ Function SLP_DXPS_Export2D()
 	DoPrompt "Enter parameters",Energy_Max,Energy_Min,Energy_Step,Norm_Energy,Exprted2DW_Name
 	
 	For (i=0;i<N_Scans;i+=1)
-		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 			WaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_CmbndBE"
 			NrmWaveFName=SLP_DXPS_ScanListW[i][1]+SLP_DXPS_ScanListW[i][0]+"_CmbndBE_nrm"
 			
@@ -17028,7 +17028,7 @@ Function /S SLP_DXPS_GenListFromChk()
 	
 	variable i=0
 	For (i=0;i<N_Scans;i+=1)
-		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48)
+		If (SLP_DXPS_ScanListDisplaySelW[i][0]==48||SLP_DXPS_ScanListDisplaySelW[i][0]==49)
 			Chked_ScanList+=SLP_DXPS_ScanListW[i][0]+";"
 		EndIf
 	EndFor
