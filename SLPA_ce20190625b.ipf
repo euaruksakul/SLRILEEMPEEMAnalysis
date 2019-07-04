@@ -20729,7 +20729,7 @@ Function /S SLP_IXPS_GenListFromChk()
 	
 	variable i=0
 	For (i=0;i<N_Scans;i+=1)
-		If (SLP_IXPS_ScanListDisplaySelW[i][0]==48)
+		If (SLP_IXPS_ScanListDisplaySelW[i][0]==48||SLP_IXPS_ScanListDisplaySelW[i][0]==49)
 			Chked_ScanList+=SLP_IXPS_ScanListW[i][0]+";"
 		EndIf
 	EndFor
