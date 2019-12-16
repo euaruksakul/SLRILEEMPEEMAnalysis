@@ -1,10 +1,11 @@
+#pragma TextEncoding = "UTF-8"
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
 
 /////////////////////////////////////
 //////////CHANGE LOG/////////////////
 ////////////////////////////////////
 
-//SLPA ver ce20191216e.ipf
+//SLPA Igor8 ver ce20191216e.ipf
 //	- [ImgXPS] - Add capabilities to export fitting results from imaging XPS data analysis into an image sequence.
 //			In this way users who don't use Igor can use free softwares like ImageJ to load the sequence, then use the frame slider
 //			to see different parts of IXPS data and the fitting results. [SLP_IXPS_FitExportVideoUX]
@@ -18,7 +19,14 @@
 //			waves when they export plot/images from SLPA into their working Igor folder (e.g. root).
 //	- [Util] - [SLP_Util_LabelImage] a small code to put an image wave name on the image display.
 
-//SLPA ver ce20190625b.ipf ** From now SLPA for Igor6 and Igor7,8 are developed separatedly (text encoding issue)
+
+//SLPA Igor8 ver ce20190625b.ipf
+//	- [ImgXPS][LoadLEEM] Convert the text encoding into UTF-8 using ConvertTextEncoding
+//			because, since Igor7, UTF-8 has been used instead of system encoding, 
+//			and the text files created from LEEM2000 are encoded in ISO-8859-1 which is different from UTF-8. 
+//			Now SLPA can read FOV (Âµ and Â°) correctly.
+
+//SLPA ver ce/0190625b.ipf
 //	- [ImgXPS] - LEEM cut-off extraction can now use Lower and Upper Limits
 
 //SLPA ver ce20190620a.ipf
@@ -1147,9 +1155,6 @@ Function SLP_Util_LabelImage(GraphName)
 	String ImageName=stringfromlist(0,ImageNameList(GraphName,";"))
 	Textbox /A=RB ImageName
 End
-
-
-
 
 
 
@@ -6516,7 +6521,7 @@ Function SLP_LL_PlotSingleImg()
 	
 	String ImgLabel_L1="Image wave name: "+SLP_ImgListW[LoadLEEM_Sel][3]
 	String ImgLabel_L2="(x,y): ("+SLP_ImgParamListW[LoadLEEM_Sel][2]+"mm ,"+SLP_ImgParamListW[LoadLEEM_Sel][3]+"mm), FOV: "+SLP_ImgParamListW[LoadLEEM_Sel][5]
-	String ImgLabel_L3="Temperature: "+SLP_ImgParamListW[LoadLEEM_Sel][4]+ "¡C"
+	String ImgLabel_L3="Temperature: "+SLP_ImgParamListW[LoadLEEM_Sel][4]+ "Â°C"
 	
 	NewImage ImgW
 	//ModifyGraph margin(bottom)=60
@@ -7477,7 +7482,7 @@ Function SLP_LoadFullSize()
 		
 	String ImgLabel_L1="Image wave name: "+ImgListW[LoadLEEM_Sel][3]
 	String ImgLabel_L2="(x,y): ("+ImgParamListW[LoadLEEM_Sel][2]+"mm ,"+ImgParamListW[LoadLEEM_Sel][3]+"mm), FOV: "+ImgParamListW[LoadLEEM_Sel][5]
-	String ImgLabel_L3="Temperature: "+ImgParamListW[LoadLEEM_Sel][4]+ "¡C"
+	String ImgLabel_L3="Temperature: "+ImgParamListW[LoadLEEM_Sel][4]+ "Â°C"
 	String Note_String=ImgLabel_L1+"\r"+ImgLabel_L2+"\r"+ImgLabel_L3
 	Note ImgW,Note_String
 	
@@ -8032,6 +8037,7 @@ Function SLP_get_LEEM_Param(ce_StartAddress,ce_EndAddress,ce_Filename)
 			//print "FOV"
 			FReadLine /T=(num2char(9)) ce_file,ce_loadString //not sure about num2char(9)
 			ce_loadString=RemoveEnding(ce_loadString) //Remove ASCII no. 9 (tab)
+			ce_loadString=ConvertTextEncoding(ce_loadString, 120,1, 1, 0)
 			//print "Preset A: "+ce_loadString
 			ce_FOV1=ce_loadString
 			FReadLine /T=(num2char(0)) ce_file,ce_loadString
@@ -8363,7 +8369,6 @@ Function ButtonProc_LL_Stitch_Cancel(ba) : ButtonControl
 	return 0
 End
 
-
 Function SLP_Stitch_Init()
 	string Current_folder=getdatafolder(1)
 	newdatafolder /O root:Package_SLP
@@ -8376,7 +8381,7 @@ Function SLP_Stitch_Init()
 	variable /G SLP_LL_SetScale_Sel=0
 	
 	make /O /T /N=(32,3) SLP_FOV_table //Col. 1= FOV name, Col. 2 = FOV (number in microns), Col. 3 = rotation
-	SLP_FOV_table[0][0]= {"100µm","75µm","50µm","25µm","15µm","10µm","7.5µm","5µm","3µm","2µm","LEED/PEAD","disp._pl.","","","","","","","","","","","","","","","","","","","",""}
+	SLP_FOV_table[0][0]= {"100Âµm","75Âµm","50Âµm","25Âµm","15Âµm","10Âµm","7.5Âµm","5Âµm","3Âµm","2Âµm","LEED/PEAD","disp._pl.","","","","","","","","","","","","","","","","","","","",""}
 	SLP_FOV_table[0][1]= {"100","75","50","25","15","10","7.5","5","3","2","XXX","YYY","","","","","","","","","","","","","","","","","","","",""}
 	SLP_FOV_table[0][2]={"0","0","0","0","0","0","0","0","0","0","0","0","","","","","","","","","","","","","","","","","","","",""}
 	//[TODO] - Check the rotation for each FOV
@@ -8415,9 +8420,7 @@ Function SLP_Stitch_Init()
 	variable /G new_pixelSizeX
 	variable /G new_pixelSizeY
 	
-	
 	setdatafolder $Current_folder
-
 End
 
 Function slp_AddScale_StandAlone(ImageWaveName,FOV,threshold)
@@ -12778,6 +12781,12 @@ Function ButtonProc_DXPS(ba) : ButtonControl
 				case "Button_SelMulti":
 					Panel_DXPS_ScanSelection()
 					break
+				case "Button_ExpFitSequence":
+					SLP_IXPS_FitExportVideoUX()
+					break
+				case "Button_ExpPeakArea":
+					SLP_IXPS_AreaSpecMapsDisplayUX()
+					break
 			EndSwitch
 			
 			break
@@ -16847,7 +16856,7 @@ Function SLP_IXPS_CreateParamMap2(VolName,Display_Flg)
 				EndIf
 			EndFor
 		EndFor
-		SLP_IXPS_ScanListW[DataRow][59]="1"
+		SLP_IXPS_ScanListW[DataRow][59]="1"	
 	EndIf
 	
 	//SetDataFolder $Current_Folder
@@ -18946,11 +18955,11 @@ Function SLP_IXPS_DisplaySelectedData(VolName)
 	
 	//Display XPS extraction button
 	If (Stringmatch(SLP_IXPS_ScanListW[DataRow][59],"1")&&Stringmatch(SLP_IXPS_ScanListW[DataRow][17],"Reverse GLAs Peaks (XPS)"))
-		Button Button_ExpFitSequence disable=0,win=SLP_ImgXPS_Panel_01
-		Button Button_ExpPeakArea disable=0,win=SLP_ImgXPS_Panel_01
+		Button  Button_ExpFitSequence disable=0,Win=SLP_ImgXPS_Panel_01
+		Button  Button_ExpPeakArea disable=0,Win=SLP_ImgXPS_Panel_01
 	Else
-		Button Button_ExpFitSequence disable=1,win=SLP_ImgXPS_Panel_01
-		Button Button_ExpPeakArea disable=1,win=SLP_ImgXPS_Panel_01
+		Button  Button_ExpFitSequence disable=1,Win=SLP_ImgXPS_Panel_01
+		Button  Button_ExpPeakArea disable=1,Win=SLP_ImgXPS_Panel_01
 	EndIf
 	
 End
@@ -19043,12 +19052,6 @@ Function ButtonProc_IXPS(ba) : ButtonControl
 //					Wave SLP_IXPS_ScanListDisplaySelW=root:Package_SLP:ImgXPS:SLP_IXPS_ScanListDisplaySelW
 //					SLP_IXPS_ScanListDisplaySelW[][0]=32+(SLP_IXPS_ScanListDisplaySelW[p][0]==33||SLP_IXPS_ScanListDisplaySelW[p][0]==49||SLP_IXPS_ScanListDisplaySelW[p][0]==48)*16
 					Panel_ImgXPS_ScanSelection()
-					break
-				case "Button_ExpFitSequence":
-					SLP_IXPS_FitExportVideoUX()
-					break
-				case "Button_ExpPeakArea":
-					SLP_IXPS_AreaSpecMapsDisplayUX()
 					break
 			EndSwitch
 			
@@ -24180,6 +24183,8 @@ Function /T SLP_Util_ExtScanParam([File_FName])
 	
 	For (i=0;i<=MaxLine;i+=1)
 		FReadLine SLP_RefNum,Line_Str
+		Line_Str=ConvertTextEncoding(Line_Str, 120,1, 1, 0) 
+		//[Igor8] - Convert text encoding from iso-8859-1 (output from LEEM2000) to UTF-8
 		If (strlen(Line_Str)!=0)
 			ParamListStr+=Line_Str[0,strlen(Line_Str)-2]+";"
 		Endif
@@ -25137,28 +25142,28 @@ Function SLP_Util_FOVExtraction(FOV_Txt)
 	String FOV_Txt
 	Variable FOV=0
 	strswitch(FOV_Txt)	// string switch
-		case "100µm[0.0°]":
+		case "100Âµm[0.0Â°]":
 			FOV=100		// execute if case matches expression
 			break	
-		case "75µm[0.0°]":
+		case "75Âµm[0.0Â°]":
 			FOV=75		// execute if case matches expression
 			break				
-		case "50µm[0.0°]":
+		case "50Âµm[0.0Â°]":
 			FOV=50		// execute if case matches expression
 			break	
-		case "25µm[0.0°]":
+		case "25Âµm[0.0Â°]":
 			FOV=25		// execute if case matches expression
 			break	
-		case "10µm[0.0°]":
+		case "10Âµm[0.0Â°]":
 			FOV=10		// execute if case matches expression
 			break	
-		case "5µm[0.0°]":
+		case "5Âµm[0.0Â°]":
 			FOV=5		// execute if case matches expression
 			break	
-		case "3µm[0.0°]":
+		case "3Âµm[0.0Â°]":
 			FOV=3		// execute if case matches expression
 			break	
-		case "2µm[0.0°]":
+		case "2Âµm[0.0Â°]":
 			FOV=2		// execute if case matches expression
 			break	
 		default:							// optional default expression executed
