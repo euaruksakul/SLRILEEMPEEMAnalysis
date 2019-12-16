@@ -12781,12 +12781,6 @@ Function ButtonProc_DXPS(ba) : ButtonControl
 				case "Button_SelMulti":
 					Panel_DXPS_ScanSelection()
 					break
-				case "Button_ExpFitSequence":
-					SLP_IXPS_FitExportVideoUX()
-					break
-				case "Button_ExpPeakArea":
-					SLP_IXPS_AreaSpecMapsDisplayUX()
-					break
 			EndSwitch
 			
 			break
@@ -19052,6 +19046,12 @@ Function ButtonProc_IXPS(ba) : ButtonControl
 //					Wave SLP_IXPS_ScanListDisplaySelW=root:Package_SLP:ImgXPS:SLP_IXPS_ScanListDisplaySelW
 //					SLP_IXPS_ScanListDisplaySelW[][0]=32+(SLP_IXPS_ScanListDisplaySelW[p][0]==33||SLP_IXPS_ScanListDisplaySelW[p][0]==49||SLP_IXPS_ScanListDisplaySelW[p][0]==48)*16
 					Panel_ImgXPS_ScanSelection()
+					break
+				case "Button_ExpFitSequence":
+					SLP_IXPS_FitExportVideoUX()
+					break
+				case "Button_ExpPeakArea":
+					SLP_IXPS_AreaSpecMapsDisplayUX()
 					break
 			EndSwitch
 			
